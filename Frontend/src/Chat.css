@@ -1,0 +1,83 @@
+.chats {
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 8rem;
+
+    /* Scrollbar for Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #555 #1e1e1e;
+}
+
+/* Scrollbar for Chrome, Edge, Safari */
+.chats::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chats::-webkit-scrollbar-track {
+    background: #1e1e1e; /* Dark track background */
+}
+
+.chats::-webkit-scrollbar-thumb {
+    background-color: #555; /* Thumb color */
+    border-radius: 10px;
+    border: 2px solid #1e1e1e; /* Blend thumb with track */
+}
+
+.chats::-webkit-scrollbar-thumb:hover {
+    background: #777; /* Thumb on hover */
+}
+
+/* User message container */
+.userDiv {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* GPT message container */
+.gptDiv {
+    text-align: left;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* User message bubble */
+.userMessage {
+    background-color: #323232;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 15rem;
+    max-width: 500px;
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 12px;
+}
+
+/* GPT/AI message bubble */
+.gptMessage {
+    background-color: #2a2a2a;
+    color: #eee;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-right: 15rem;
+    max-width: 500px;
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 12px;
+}
+
+/* Code block styling */
+.hljs {
+    border-radius: 14px !important;
+    background-color: #1e1e1e !important;
+    padding: 10px;
+    font-size: 0.85rem;
+    overflow-x: auto;
+}
+
+/* Ensure code blocks wrap nicely */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
