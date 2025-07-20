@@ -6,7 +6,7 @@
 
 **AI Chat Application powered by OpenRouter API**
 
-SYNAPZ is a modern ChatGPT-like conversational AI platform that provides seamless access to multiple AI models through the OpenRouter API. Built with React and Node.js, it offers a clean, responsive chat interface with persistent conversation storage in MongoDB. The application is deployed on Render, ensuring reliable cloud hosting and scalable performance for users seeking an intuitive AI chat experience.
+SYNAPZ is a sleek conversational AI chat platform inspired by modern AI chat platforms that enables seamless interaction with multiple AI models via OpenRouter API integration. Built with React and Node.js, it offers a clean, responsive chat interface with persistent conversation storage in MongoDB. The application is deployed on Render, ensuring reliable cloud hosting and scalable performance for users seeking an intuitive AI chat experience.
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](#)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](#)
