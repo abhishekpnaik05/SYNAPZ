@@ -11,20 +11,35 @@
 
 /* navbar */
 
+/* navbar */
 .navbar {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Add this for proper positioning */
+    padding: 1rem 0; /* Add some padding */
+}
+
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold; /* Optional: makes the text stand out more */
+}
+
+.userIconDiv {
+    margin: 0 2rem;
+    margin-left: auto; /* Pushes it to the right */
 }
 
 .navbar span {
     margin: 1rem 2rem;
 }
 
-.userIconDiv {
+/* .userIconDiv {
     margin: 1rem 2rem;
-}
+} */
 
 .userIcon {
     background-color: #339cff;

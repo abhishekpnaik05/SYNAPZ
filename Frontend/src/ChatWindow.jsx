@@ -61,11 +61,13 @@ function ChatWindow() {
     return (
         <div className="chatWindow">
             <div className="navbar">
-                <span>SYNAPZ <i className="fa-solid fa-chevron-down"></i></span>
-                <div className="userIconDiv" onClick={handleProfileClick}>
-                    <span className="userIcon"><i className="fa-solid fa-user"></i></span>
+                <div className="navbar-center">
+                    SYNAPZ <i className="fa-solid fa-chevron-down"></i>
                 </div>
+            <div className="userIconDiv" onClick={handleProfileClick}>
+                <span className="userIcon"><i className="fa-solid fa-user"></i></span>
             </div>
+        </div>
             {
                 isOpen && 
                 <div className="dropDown">
@@ -91,7 +93,7 @@ function ChatWindow() {
                     <div id="submit" onClick={getReply}><i className="fa-solid fa-paper-plane"></i></div>
                 </div>
                 <p className="info">
-                    SYNAPZ can make mistakes. Check important info. See Cookie Preferences.
+                    SYNAPZ can make mistakes. Check important info.
                 </p>
             </div>
         </div>
