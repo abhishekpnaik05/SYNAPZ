@@ -8,12 +8,32 @@ function ChatWindow() {
     const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [userId, setUserId] = useState(null);
+
+    // Generate or get user session ID
+    useEffect(() => {
+        let userSessionId = sessionStorage.getItem('userSessionId');
+        
+        if (!userSessionId) {
+            // Generate a unique user ID if one doesn't exist
+            userSessionId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('userSessionId', userSessionId);
+        }
+        
+        setUserId(userSessionId);
+    }, []);
 
     const getReply = async () => {
+        if (!userId) {
+            console.error("User ID not available");
+            return;
+        }
+
         setLoading(true);
         setNewChat(false);
 
-        console.log("message ", prompt, " threadId ", currThreadId);
+        console.log("message ", prompt, " threadId ", currThreadId, " userId ", userId);
+        
         const options = {
             method: "POST",
             headers: {
@@ -21,7 +41,8 @@ function ChatWindow() {
             },
             body: JSON.stringify({
                 message: prompt,
-                threadId: currThreadId
+                threadId: currThreadId,
+                userId: userId // Include user ID in the request
             })
         };
 
@@ -53,9 +74,15 @@ function ChatWindow() {
         setPrompt("");
     }, [reply]);
 
-
     const handleProfileClick = () => {
         setIsOpen(!isOpen);
+    }
+
+    const handleLogout = () => {
+        // Clear user session
+        sessionStorage.removeItem('userSessionId');
+        // Refresh the page to start a new session
+        window.location.reload();
     }
 
     return (
@@ -71,9 +98,11 @@ function ChatWindow() {
             {
                 isOpen && 
                 <div className="dropDown">
-                    <div className="dropDownItem"><i class="fa-solid fa-gear"></i> Settings</div>
-                    <div className="dropDownItem"><i class="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
-                    <div className="dropDownItem"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                    <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
+                    <div className="dropDownItem"><i className="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
+                    <div className="dropDownItem" onClick={handleLogout}>
+                        <i className="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                    </div>
                 </div>
             }
             <Chat></Chat>
@@ -87,6 +116,7 @@ function ChatWindow() {
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter'? getReply() : ''}
+                        disabled={!userId} // Disable input until user ID is available
                     >
                            
                     </input>

@@ -50,6 +50,23 @@ button:hover {
     font-size: 14px;
     border: solid 10px transparent;
     position: relative;
+    /* Add text truncation properties */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    overflow: hidden;
+    min-height: 20px;
+}
+
+.thread-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+    display: block;
+    max-width: calc(100% - 30px); /* Leave space for delete icon */
 }
 
 .history li:hover {
@@ -68,7 +85,9 @@ button:hover {
 .fa-trash {
     opacity: 0;
     position: absolute;
-    right: 0;
+    right: 10px; /* Adjust position to account for padding */
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
 }
 
 .history li:hover .fa-trash {
@@ -127,5 +146,9 @@ button:hover {
 
     .sign {
         display: block;
+    }
+
+    .thread-title {
+        font-size: 14px;
     }
 }

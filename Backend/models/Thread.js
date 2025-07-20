@@ -20,7 +20,12 @@ const ThreadSchema = new mongoose.Schema({
     threadId: {
         type: String,
         required: true,
-        unique: true
+        unique: false // Changed from unique: true since multiple users can have same threadId
+    },
+    userId: {
+        type: String,
+        required: true,
+        index: true // Add index for better query performance
     },
     title: {
         type: String,
@@ -36,5 +41,8 @@ const ThreadSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+// Create compound index for threadId + userId combination to ensure uniqueness per user
+ThreadSchema.index({ threadId: 1, userId: 1 }, { unique: true });
 
 export default mongoose.model("Thread", ThreadSchema);
