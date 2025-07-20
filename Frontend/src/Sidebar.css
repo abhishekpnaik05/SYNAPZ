@@ -8,7 +8,6 @@
     justify-content: space-between;
 }
 
-
 button {
     display: flex;
     justify-content: space-between;
@@ -84,4 +83,49 @@ button:hover {
 .highlighted {
     background-color: rgba(180, 180, 180, 0.05);
     border-radius: 10px;
+}
+
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 80%;
+        background-color: #171717;
+        z-index: 1000;
+        flex-direction: column;
+        transition: left 0.3s ease-in-out;
+        overflow-y: auto;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .history {
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .sign {
+        display: block;
+    }
 }
