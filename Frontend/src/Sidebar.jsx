@@ -16,20 +16,6 @@ function Sidebar() {
     } = useContext(MyContext);
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [userId, setUserId] = useState(null);
-
-    // Get user session ID
-    useEffect(() => {
-        let userSessionId = sessionStorage.getItem('userSessionId');
-        
-        if (!userSessionId) {
-            // Generate a unique user ID if one doesn't exist
-            userSessionId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            sessionStorage.setItem('userSessionId', userSessionId);
-        }
-        
-        setUserId(userSessionId);
-    }, []);
 
     // Helper function to truncate long titles
     const truncateTitle = (title, maxLength = 30) => {
@@ -56,10 +42,8 @@ function Sidebar() {
     };
 
     const getAllThreads = async () => {
-        if (!userId) return;
-        
         try {
-            const response = await fetch(`https://synapz-backend.onrender.com/api/thread?userId=${userId}`);
+            const response = await fetch("https://synapz-backend.onrender.com/api/thread");
             const res = await response.json();
             const filteredData = res.map(thread => ({ 
                 threadId: thread.threadId, 
@@ -72,10 +56,8 @@ function Sidebar() {
     };
 
     useEffect(() => {
-        if (userId) {
-            getAllThreads();
-        }
-    }, [currThreadId, userId]);
+        getAllThreads();
+    }, [currThreadId]);
 
     const createNewChat = () => {
         setNewChat(true);
@@ -87,11 +69,9 @@ function Sidebar() {
     };
 
     const changeThread = async (newThreadId) => {
-        if (!userId) return;
-        
         setCurrThreadId(newThreadId);
         try {
-            const response = await fetch(`https://synapz-backend.onrender.com/api/thread/${newThreadId}?userId=${userId}`);
+            const response = await fetch(`https://synapz-backend.onrender.com/api/thread/${newThreadId}`);
             const res = await response.json();
             setPrevChats(res);
             setNewChat(false);
@@ -103,10 +83,8 @@ function Sidebar() {
     };
 
     const deleteThread = async (threadId) => {
-        if (!userId) return;
-        
         try {
-            const response = await fetch(`https://synapz-backend.onrender.com/api/thread/${threadId}?userId=${userId}`, {
+            const response = await fetch(`https://synapz-backend.onrender.com/api/thread/${threadId}`, {
                 method: "DELETE",
             });
             const res = await response.json();

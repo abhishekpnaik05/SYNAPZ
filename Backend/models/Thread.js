@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Message Schema
 const MessageSchema = new mongoose.Schema({
     role: {
         type: String,
@@ -16,16 +17,12 @@ const MessageSchema = new mongoose.Schema({
     }
 });
 
+// Thread Schema
 const ThreadSchema = new mongoose.Schema({
     threadId: {
         type: String,
         required: true,
-        unique: false // Changed from unique: true since multiple users can have same threadId
-    },
-    userId: {
-        type: String,
-        required: true,
-        index: true // Add index for better query performance
+        unique: true
     },
     title: {
         type: String,
@@ -42,7 +39,5 @@ const ThreadSchema = new mongoose.Schema({
     }
 });
 
-// Create compound index for threadId + userId combination to ensure uniqueness per user
-ThreadSchema.index({ threadId: 1, userId: 1 }, { unique: true });
-
+// Export the model
 export default mongoose.model("Thread", ThreadSchema);

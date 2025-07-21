@@ -9,7 +9,6 @@ router.post("/test", async(req, res) => {
     try {
         const thread = new Thread({
             threadId: "abc",
-            userId: "test_user",
             title: "Testing New Thread2"
         });
 
@@ -21,16 +20,10 @@ router.post("/test", async(req, res) => {
     }
 });
 
-//Get all threads for a specific user
+//Get all threads
 router.get("/thread", async(req, res) => {
-    const { userId } = req.query;
-
-    if (!userId) {
-        return res.status(400).json({error: "userId is required"});
-    }
-
     try {
-        const threads = await Thread.find({ userId }).sort({updatedAt: -1});
+        const threads = await Thread.find({}).sort({updatedAt: -1});
         //descending order of updatedAt...most recent data on top
         res.json(threads);
     } catch(err) {
@@ -40,18 +33,13 @@ router.get("/thread", async(req, res) => {
 });
 
 router.get("/thread/:threadId", async(req, res) => {
-    const { threadId } = req.params;
-    const { userId } = req.query;
-
-    if (!userId) {
-        return res.status(400).json({error: "userId is required"});
-    }
+    const {threadId} = req.params;
 
     try {
-        const thread = await Thread.findOne({ threadId, userId });
+        const thread = await Thread.findOne({threadId});
 
         if(!thread) {
-            return res.status(404).json({error: "Thread not found"});
+            res.status(404).json({error: "Thread not found"});
         }
 
         res.json(thread.messages);
@@ -62,18 +50,13 @@ router.get("/thread/:threadId", async(req, res) => {
 });
 
 router.delete("/thread/:threadId", async (req, res) => {
-    const { threadId } = req.params;
-    const { userId } = req.query;
-
-    if (!userId) {
-        return res.status(400).json({error: "userId is required"});
-    }
+    const {threadId} = req.params;
 
     try {
-        const deletedThread = await Thread.findOneAndDelete({ threadId, userId });
+        const deletedThread = await Thread.findOneAndDelete({threadId});
 
         if(!deletedThread) {
-            return res.status(404).json({error: "Thread not found"});
+            res.status(404).json({error: "Thread not found"});
         }
 
         res.status(200).json({success : "Thread deleted successfully"});
@@ -85,20 +68,19 @@ router.delete("/thread/:threadId", async (req, res) => {
 });
 
 router.post("/chat", async(req, res) => {
-    const { threadId, message, userId } = req.body;
+    const {threadId, message} = req.body;
 
-    if(!threadId || !message || !userId) {
-        return res.status(400).json({error: "missing required fields (threadId, message, userId)"});
+    if(!threadId || !message) {
+        res.status(400).json({error: "missing required fields"});
     }
 
     try {
-        let thread = await Thread.findOne({ threadId, userId });
+        let thread = await Thread.findOne({threadId});
 
         if(!thread) {
-            //create a new thread in Db for this specific user
+            //create a new thread in Db
             thread = new Thread({
                 threadId,
-                userId,
                 title: message,
                 messages: [{role: "user", content: message}]
             });
